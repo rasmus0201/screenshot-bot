@@ -1,0 +1,14 @@
+{
+  "title": "links",
+  "headless": true,
+  "device": "imac21",
+  "base_url": "https://www.webmatematik.dk",
+  "levels": [
+    "/lektioner/7-9-klasse",
+    "/lektioner/matematik-c",
+    "/lektioner/matematik-b",
+    "/lektioner/matematik-a",
+    "/lektioner/sarligt-for-htx",
+    "/lektioner/beviser"
+  ]
+}

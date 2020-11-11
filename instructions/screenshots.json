@@ -1,0 +1,9 @@
+{
+  "title": "screenshots",
+  "headless": true,
+  "device": "imac21",
+  "base_url": "https://www.webmatematik.dk",
+  "pages": [
+    "https://www.webmatematik.dk/lektioner/sarligt-for-htx/differentialregning/krumning"
+  ]
+}
