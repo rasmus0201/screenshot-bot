@@ -1,5 +1,5 @@
-# Webmatematik Screenshotter
-Screenshot pages of Webmatematik.
+# Screenshotter
+Screenshot pages of website.
 
 ## Get started
 
@@ -50,12 +50,12 @@ python capture.py instructions/screenshots.json
 
 ```json
 {
-  "title": "webmatematik",
+  "title": "screenshots",
   "headless": true,
   "device": "imac21",
-  "base_url": "https://www.webmatematik.dk",
+  "base_url": "https://www.example.dk",
   "pages": [
-    "https://www.webmatematik.dk/lektioner/7-9-klasse/procenter/regn-med-procenter"
+    "https://www.example.dk/lektioner/7-9-klasse/procenter/regn-med-procenter"
   ]
 }
 ```
