@@ -34,7 +34,8 @@ def capture(instruction):
     time.sleep(2) # Wait for the page finish to loading
 
     cookieBtn = driver.driver.find_element(by='css selector', value='#declineButton')
-    cookieBtn.click()
+    if (cookieBtn):
+        cookieBtn.click()
 
     feedbackBtns = driver.driver.find_elements(by='css selector', value='.smcx-btn.smcx-btn-secondary.smcx-pull-left')
     if (len(feedbackBtns) > 0):
@@ -54,7 +55,7 @@ def capture(instruction):
     for page in instruction.pages:
         driver.get(f'{page}')
 
-        driver.wait_and_see('#wrapper')
+        driver.wait_and_see('#content')
 
         time.sleep(1)
 
@@ -72,7 +73,7 @@ def capture(instruction):
         except Exception:
             print(f'An error occurred when trying to screenshot [{fileLocation}]')
 
-        time.sleep(1)
+        time.sleep(0.5)
 
 
     driver.quit()

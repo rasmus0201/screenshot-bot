@@ -18,13 +18,28 @@ def links(instruction):
     driver = CustomDriver(instruction)
     pages = []
 
-    for levels in instruction.levels:
-        driver.get(f'{instruction.base_url}{levels}')
+    count = 0
+    num_levels = len(instruction.levels)
 
-        links = driver.find_elements('.level .classes .sections .menulink .group .classes li a.link')
+    print(f'Starting to collect links ({num_levels})')
+
+    for level in instruction.levels:
+        url = f'{instruction.base_url}{level}'
+
+        driver.get(url)
+
+        links = driver.find_elements('#content .sub_navigation a')
+
+        if (len(links) == 0):
+            pages.append(url)
 
         for link in links:
             pages.append(link.get_attribute('href'))
+
+        count += 1
+        print(f'Found {len(links)} links for [{level}]. Completed: [{count}/{num_levels}]')
+
+        time.sleep(0.2)
 
     driver.quit()
 
