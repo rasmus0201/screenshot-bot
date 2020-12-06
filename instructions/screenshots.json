@@ -1,9 +1,11 @@
 {
   "title": "screenshots",
   "headless": true,
+  "multi_thread": true,
+  "max_threads": 3,
   "device": "imac21",
   "base_url": "https://www.webmatematik.dk",
   "pages": [
-    "https://www.webmatematik.dk/lektioner/sarligt-for-htx/differentialregning/krumning"
+    "https://www.webmatematik.dk/lektioner/sarligt-for-htx/analytisk-plangeometri/konstruktion-af-trekanter"
   ]
 }

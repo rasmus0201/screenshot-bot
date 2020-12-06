@@ -27,43 +27,52 @@ def capture(instruction):
     print(f'Started capture process...')
 
     driver = CustomDriver(instruction)
+    # driver.driver.implicitly_wait(8)
 
     driver.get(f'{instruction.base_url}')
 
-    time.sleep(0.5) # Wait for the page finish to loading
+    time.sleep(2) # Wait for the page finish to loading
 
     cookieBtn = driver.driver.find_element(by='css selector', value='#declineButton')
     cookieBtn.click()
 
-    feedbackBtn = driver.driver.find_elements(by='css selector', value='.smcx-btn.smcx-btn-secondary.smcx-pull-left')[0]
-    feedbackBtn.click()
+    feedbackBtns = driver.driver.find_elements(by='css selector', value='.smcx-btn.smcx-btn-secondary.smcx-pull-left')
+    if (len(feedbackBtns) > 0):
+        feedbackBtns[0].click()
 
-    homeworkHelpBtn = driver.driver.find_elements(by='css selector', value='.membershipalert .nah')[0]
-    homeworkHelpBtn.click()
+    homeworkHelpBtns = driver.driver.find_elements(by='css selector', value='.membershipalert .nah')
+    if (len(homeworkHelpBtns) > 0):
+        homeworkHelpBtns[0].click()
 
-    time.sleep(1) # Small time delay to let the modals fully close
+    time.sleep(3) # Small time delay to let the modals fully close
 
     print(f'Beginning screenshot of {len(instruction.pages)} pages...')
+
+    count = 0
+    num_pages = len(instruction.pages)
 
     for page in instruction.pages:
         driver.get(f'{page}')
 
         driver.wait_and_see('#wrapper')
 
+        time.sleep(1)
+
         fileLocation = page.replace(instruction.base_url, '').strip('/')
         saveLocation = f'{output_dir}/{fileLocation}.png'
 
-        savePath, fileName = os.path.split(saveLocation)
+        savePath, _ = os.path.split(saveLocation)
 
         Path(savePath).mkdir(parents=True, exist_ok=True)
 
         try:
             driver.save_full_page_screenshot(saveLocation)
-            print(f'Saved screenshot of [{fileLocation}]')
+            count += 1
+            print(f'Saved screenshot of [{fileLocation}] ({count}/{num_pages})')
         except Exception:
             print(f'An error occurred when trying to screenshot [{fileLocation}]')
 
-        time.sleep(0.5)
+        time.sleep(1)
 
 
     driver.quit()
@@ -76,11 +85,11 @@ def run(instruction_file):
         instruction = Instruction.from_dict(instruction_dict)
 
 
-    if (len(instruction.pages) <= 10):
+    if (len(instruction.pages) <= 10 or instruction.multi_thread == False):
         capture(instruction)
     else:
         processes = []
-        chunkedPages = chunks(instruction.pages, math.ceil(len(instruction.pages) / 5))
+        chunkedPages = chunks(instruction.pages, math.ceil(len(instruction.pages) / instruction.max_threads))
 
         for chunk in chunkedPages:
             customInstruction = instruction

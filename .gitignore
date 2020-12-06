@@ -136,3 +136,4 @@ chromedriver
 instructions/*
 !instructions/links.json
 !instructions/screenshots.json
+!instructions/pdfs.json

@@ -10,5 +10,7 @@ class Instruction:
     base_url: str
     device: str = "macbook13"
     headless: bool = False
+    multi_thread: bool = True
+    max_threads: int = 3
     pages: Optional[List[str]] = field(default_factory=list)
     levels: Optional[List[str]] = field(default_factory=list)
