@@ -15,7 +15,10 @@ class CustomDriver:
         options = Options()
         options.add_argument(f'window-size={sc_width}x{sc_height}')
         options.headless = instruction.headless
+        options.add_argument('disable_infobars')
 
+        self.sc_width = sc_width
+        self.sc_height = sc_height
         self.driver = webdriver.Chrome(chromedriver, options=options)
 
     def get(self, url):
@@ -25,12 +28,16 @@ class CustomDriver:
         return self.driver.save_screenshot(path)
 
     def save_full_page_screenshot(self, path):
-        original_size = self.driver.get_window_size()
-        S = lambda X: self.driver.execute_script('return document.body.parentNode.scroll'+X)
+        time.sleep(0.3)
+        # S = lambda X: self.driver.execute_script('return document.querySelector("body").scroll'+X)
+        S = lambda X: self.driver.execute_script('return document.documentElement.scroll'+X)
+
         self.driver.set_window_size(S('Width'), S('Height'))
         time.sleep(0.2)
         self.driver.find_element_by_tag_name('body').screenshot(path)
-        self.driver.set_window_size(original_size['width'], original_size['height'])
+        time.sleep(0.2)
+        self.driver.set_window_size(self.sc_width, self.sc_height)
+        time.sleep(0.2)
 
     def quit(self):
         return self.driver.quit()
